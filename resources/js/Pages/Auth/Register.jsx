@@ -1,11 +1,12 @@
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
+import SelectInput from '@/Components/SelectInput';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function Register() {
+export default function Register({ vaccine_centers }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
@@ -74,6 +75,7 @@ export default function Register() {
                         autoComplete="nid"
                         onChange={(e) => setData('nid', e.target.value)}
                         required
+                        maxlength="13"
                     />
 
                     <InputError message={errors.nid} className="mt-2" />
@@ -90,10 +92,32 @@ export default function Register() {
                         className="mt-1 block w-full"
                         autoComplete="phone"
                         onChange={(e) => setData('phone', e.target.value)}
-                        required
                     />
 
                     <InputError message={errors.phone} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel
+                        htmlFor="vaccine_center"
+                        value="Vaccine Center"
+                    />
+
+                    <SelectInput
+                        id="vaccine_center"
+                        name="vaccine_center"
+                        options={vaccine_centers}
+                        className={'w-full max-w-full truncate'}
+                        onChange={(e) => {
+                            setData('vaccine_center', e.target.value)
+                        }}
+                        required
+                    />
+
+                    <InputError
+                        message={errors.vaccine_center}
+                        className="mt-2"
+                    />
                 </div>
 
                 <div className="mt-4">

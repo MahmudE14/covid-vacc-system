@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\VaccineCenter;
 use App\Rules\NID;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -21,7 +22,14 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        return Inertia::render('Auth/Register', [
+            'vaccine_centers' => VaccineCenter::all([
+                'id',
+                'name',
+                'location',
+                'daily_capacity',
+            ]),
+        ]);
     }
 
     /**
@@ -36,7 +44,8 @@ class RegisteredUserController extends Controller
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'nid' => ['required', 'string', 'unique:'.User::class, new NID],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'phone' => 'nullable|string|max:11',
+            'phone' => 'nullable|string',
+            'vaccine_center' => 'required|exists:vaccine_centers,id',
         ]);
 
         $user = User::create([
@@ -45,6 +54,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'nid' => $request->nid,
             'phone' => $request->phone,
+            'vaccine_center_id' => $request->vaccine_center,
         ]);
 
         event(new Registered($user));
