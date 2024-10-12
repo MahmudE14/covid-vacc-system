@@ -34,7 +34,6 @@ class ProfileUpdateRequest extends FormRequest
             'phone' => [
                 'nullable',
                 'string',
-                'max:11'
             ],
         ];
     }

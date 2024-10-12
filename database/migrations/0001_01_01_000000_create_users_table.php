@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('nid', 10)->unique()->index('users_nid_unique');
+            $table->string('nid', 13)->unique()->index('users_nid_unique');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->string('phone', 11)->nullable();
+            $table->string('phone')->nullable();
             $table->enum('status', [
                 'Not registered',
                 'Not scheduled',
