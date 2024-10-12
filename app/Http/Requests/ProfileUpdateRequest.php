@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use App\Rules\NID;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -24,6 +25,16 @@ class ProfileUpdateRequest extends FormRequest
                 'email',
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
+            ],
+            'nid' => [
+                'required',
+                'string',
+                'unique:'.User::class, new NID
+            ],
+            'phone' => [
+                'nullable',
+                'string',
+                'max:11'
             ],
         ];
     }

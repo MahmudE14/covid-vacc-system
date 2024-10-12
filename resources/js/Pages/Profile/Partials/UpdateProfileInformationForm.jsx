@@ -16,6 +16,8 @@ export default function UpdateProfileInformation({
         useForm({
             name: user.name,
             email: user.email,
+            nid: user.nid,
+            phone: user.phone,
         });
 
     const submit = (e) => {
@@ -91,6 +93,39 @@ export default function UpdateProfileInformation({
                         )}
                     </div>
                 )}
+
+                <div>
+                    <InputLabel htmlFor="nid" value="NID" />
+
+                    <TextInput
+                        id="nid"
+                        type="number"
+                        name="nid"
+                        value={data.nid}
+                        className="mt-1 block w-full bg-gray-200 text-gray-700 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                        autoComplete="nid"
+                        onChange={(e) => setData('nid', e.target.value)}
+                        disabled
+                    />
+
+                    <InputError message={errors.nid} className="mt-2" />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="phone" value="Phone" />
+
+                    <TextInput
+                        id="phone"
+                        type="text"
+                        name="phone"
+                        value={data.phone}
+                        className="mt-1 block w-full"
+                        autoComplete="phone"
+                        onChange={(e) => setData('phone', e.target.value)}
+                    />
+
+                    <InputError message={errors.phone} className="mt-2" />
+                </div>
 
                 <div className="flex items-center gap-4">
                     <PrimaryButton disabled={processing}>Save</PrimaryButton>
