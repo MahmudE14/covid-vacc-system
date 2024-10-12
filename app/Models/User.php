@@ -57,9 +57,9 @@ class User extends Authenticatable
         return $this->belongsTo(VaccineCenter::class, 'vaccine_center_id');
     }
 
-    public function appointments()
+    public function appointment()
     {
-        return $this->hasMany(VaccineAppointment::class);
+        return $this->hasOne(VaccineAppointment::class);
     }
 
     public function notifications()
