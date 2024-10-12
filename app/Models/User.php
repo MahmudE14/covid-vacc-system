@@ -25,6 +25,7 @@ class User extends Authenticatable
         'phone',
         'status',
         'scheduled_vaccine_date',
+        'vaccine_center_id',
         'vaccinated_at',
     ];
 
@@ -49,6 +50,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function vaccineCenter()
+    {
+        return $this->belongsTo(VaccineCenter::class, 'vaccine_center_id');
     }
 
     public function appointments()

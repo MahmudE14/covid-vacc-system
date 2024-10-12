@@ -20,8 +20,17 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('phone', 11)->nullable();
-            $table->enum('status', ['Not registered', 'Not scheduled', 'Scheduled', 'Vaccinated'])->default('Not registered');
+            $table->enum('status', [
+                'Not registered',
+                'Not scheduled',
+                'Scheduled',
+                'Vaccinated'
+            ])->default('Not registered');
             $table->date('scheduled_vaccine_date')->nullable();
+            $table->unsignedBigInteger('vaccine_center_id')
+                ->references('id')
+                ->on('vaccine_centers')
+                ->onDelete('cascade');
             $table->timestamp('vaccinated_at')->nullable();
             $table->timestamps();
         });
