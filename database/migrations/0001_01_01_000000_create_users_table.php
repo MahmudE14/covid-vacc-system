@@ -21,11 +21,10 @@ return new class extends Migration
             $table->rememberToken();
             $table->string('phone')->nullable();
             $table->enum('status', [
-                'Not registered',
                 'Not scheduled',
                 'Scheduled',
                 'Vaccinated'
-            ])->default('Not registered');
+            ])->default('Not scheduled');
             $table->date('scheduled_vaccine_date')->nullable();
             $table->unsignedBigInteger('vaccine_center_id')
                 ->references('id')
