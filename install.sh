@@ -63,7 +63,7 @@ echo "Step 8: Building frontend assets..."
 # [Step 9] => Start the queue worker (to process jobs)
 echo "Step 9: Starting queue worker and scheduler..."
 ./vendor/bin/sail artisan queue:work --daemon &
-./vendor/bin/sail artisan schedule:run
+./vendor/bin/sail artisan schedule:run >> /dev/null 2>&1
 
 # [Step 10] => Run a health check on the application
 echo "Step 10: Checking if the app is up and running..."
