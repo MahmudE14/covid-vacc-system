@@ -1,66 +1,155 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# COVID Vaccine Registration System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project is a Laravel-based application designed to allow users to register for vaccination, schedule appointments based on vaccine center availability, and receive notifications. The system optimizes registration using a first-come, first-served strategy and provides a way for users to check their vaccination status.
 
-## About Laravel
+### Requirements
+- PHP 8.1 or higher
+- MySQL 8.0
+- Docker (optional but **recommended** for setting up the environment quickly)
+- Composer
+- Node.js & npm
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# Installation
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Option 1: Automated Setup Using install.sh
+This method uses a shell script to set up everything, including Docker containers, migrations, seeding, and front-end builds. Ensure that Docker is installed and running before proceeding.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Requirements:
+- Docker
+- Git
 
-## Learning Laravel
+### Steps:
+1. Clone the repository:
+    ```
+    git clone git@github.com:MahmudE14/covid-vacc-system.git
+    cd covid-vacc-system
+    ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    `Note` - `log` is set as the default mail driver right now. If you want to use `SMTP`, required settings are also available too as commented out code. Please change according to your need to make it run seamlessly.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. Make install.sh executable and run:
+    ```
+    chmod +x install.sh
+    ./install.sh
+    
+    ```
+    If you don't want do it this way, or face any issue, try running it this way -
+    ```
+    bash install.sh
+    ```
+After the installation is complete, you can access the app at - http://localhost.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+## Option 2: Manual Installation
+If you prefer to set up the project manually or if the script is not feasible in your environment, follow these steps:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Requirements:
+- Composer
+- Node.js and npm
 
-### Premium Partners
+### Steps
+1. Open your project directory in terminal.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+2. Install dependencies:
 
-## Contributing
+    ```
+    composer install
+    npm install
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. Make a copy of `.env.example` and rename it to `.env`
 
-## Code of Conduct
+4. Make necessary change to `.env` file.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    - Change database related values:
+        ```
+        DB_CONNECTION
+        DB_HOST
+        DB_PORT
+        DB_DATABASE
+        DB_USERNAME
+        DB_PASSWORD
+        ```
 
-## Security Vulnerabilities
+    - And the mail related values, too:
+        ```
+        MAIL_MAILER
+        MAIL_HOST
+        MAIL_PORT
+        MAIL_USERNAME
+        MAIL_PASSWORD
+        MAIL_FROM_ADDRESS
+        MAIL_FROM_NAME
+        ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+5. Generate the Application Key.
 
-## License
+    In your terminal, run:
+    ```
+    php artisan key:generate
+    ```
+6. Set Up Database
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    - Create a new database for the project. Make sure the name matches the one you provided in the .env file under DB_DATABASE.
+
+    - Run Database Migrations
+
+        Run migrations to set up the tables in your database. In the terminal, execute:
+        ```
+        php artisan migrate
+        ```
+
+    -  Seed the Database
+        To insert some default data (such as the vaccine centers), run:
+        ```
+        php artisan db:seed
+        ```
+
+7. Install Frontend Dependencies
+
+    - Install Node.js Dependencies
+        ```
+        npm install
+        ```
+
+    - Build Frontend Assets
+        ```
+        npm run build
+        ```
+
+8. Setting Up Background Jobs and Scheduler
+
+    - Start the queue worker:
+        ```
+        php artisan queue:work --daemon
+        ```
+    - Start cron/scheduler:
+        ```
+        php artisan schedule:run >> /dev/null 2>&1
+        ```
+9. Running the Application
+
+    - Start the Laravel application by running:
+        ```
+        php artisan serve
+        ```
+    - Open a browser and navigate to `http://localhost:8000` to access the project
+
+## Notes for Optimization and SMS Integration
+
+If sending SMS notifications in the future is required, we follow the present structure to add the SMS notification feature.
+
+Right now there are jobs which handle the email sending logic (e.g.- `SendVaccinationReminder` and `SendWelcomeEmailJob`). Here `SendVaccinationReminder` runs inside a scheduler task, and the `SendWelcomeEmailJob` is dispatched once an user is registered in the system.
+
+We need to make two more jobs to extend this feature to send SMS - `SendVaccinationReminderSMSJob` and `SendWelcomeSMSJob` inside `app/Jobs` directory.
+
+    - The `SendWelcomeSMSJob` will inside the `ScheduleVaccineAppointment`'s `handle` method right after the `SendWelcomeEmailJob::dispatch($user, $appointment)`.
+
+    - And the `SendVaccinationReminderSMSJob` need to be added in the scheduler. In the `routes/console.php` file, we need to add -
+        ```
+        Schedule::job(new SendVaccinationReminder)
+            ->timezone('Asia/Dhaka')
+            ->dailyAt('21:00');
+        ```
+
+Good luck! 🙌
