@@ -61,8 +61,9 @@ echo "Step 8: Building frontend assets..."
 ./vendor/bin/sail npm run build
 
 # [Step 9] => Start the queue worker (to process jobs)
-echo "Step 9: Starting queue worker..."
+echo "Step 9: Starting queue worker and scheduler..."
 ./vendor/bin/sail artisan queue:work --daemon &
+./vendor/bin/sail artisan schedule:run
 
 # [Step 10] => Run a health check on the application
 echo "Step 10: Checking if the app is up and running..."

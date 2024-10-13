@@ -29,11 +29,13 @@ class SendWelcomeEmailJob implements ShouldQueue
     public function handle(): void
     {
         Mail::to($this->user->email)->send(new VaccineAppointmentMail($this->user, $this->user->appointment));
-        Notification::create([
-            'user_id' => $this->user->id,
-            'message' => 'standard',
-            'type' => 'email',
-            'sent_at' => now(),
-        ]);
+
+        // create notification track
+        $notification = new Notification();
+        $notification->user_id = $this->user->id;
+        $notification->message = 'standard';
+        $notification->type = 'email';
+        $notification->sent_at = now();
+        $notification->save();
     }
 }
