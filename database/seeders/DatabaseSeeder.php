@@ -20,15 +20,5 @@ class DatabaseSeeder extends Seeder
         $this->call([
             VaccineCenterSeeder::class,
         ]);
-
-        User::factory()->create([
-            'nid' => '1234567890',
-            'name' => 'Admin Khan',
-            'email' => 'admin@mail.com',
-            'password' => Hash::make('12345678'),
-            'nid' => '1234567890',
-            'phone' => '1234567890',
-            'vaccine_center_id' => VaccineCenter::first()?->id
-        ]);
     }
 }
