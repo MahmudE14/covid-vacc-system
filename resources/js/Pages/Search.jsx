@@ -6,7 +6,7 @@ import { Head, Link } from '@inertiajs/react';
 import axios from 'axios';
 import { useState } from 'react';
 
-export default function Search() {
+export default function Search({ message }) {
     const [searchPhrase, setSearchPhrase] = useState('');
 
     const [searchData, setSearchData] = useState({
@@ -29,8 +29,6 @@ export default function Search() {
                 message: '',
             },
         });
-
-        console.log(searchPhrase);
 
         axios
             .get(route('search-status'), {
@@ -63,13 +61,9 @@ export default function Search() {
                             message: response.data.error,
                         },
                     });
-                    console.log(response.data.error);
                 }
             });
     }
-
-    console.log(searchData);
-
 
     return (
         <GuestLayout>
@@ -78,6 +72,8 @@ export default function Search() {
             <h4 className="mb-8 mt-4 text-center text-xl font-semibold leading-tight text-gray-800">
                 Search Vaccination Status
             </h4>
+
+            <Search.RegistrationStatusMessage message={message} />
 
             <form onSubmit={search}>
                 <div>
@@ -124,26 +120,24 @@ export default function Search() {
                 </div>
             )}
 
-            {/* {(searchData.error.isError ||
-                searchData.result.status === 'Not registered') && (
-                <Search.DisplayResult status={searchData.result.status} />
-            )} */}
-
             <Search.DisplayResult
                 status={searchData.result.status}
                 date={searchData.result.date}
             />
-
-            {/* <div className="mt-6 flex items-center justify-end">
-                Haven't registered yet?&nbsp;
-                <Link
-                    href={route('register')}
-                    className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    Register here.
-                </Link>
-            </div> */}
         </GuestLayout>
+    );
+}
+
+Search.RegistrationStatusMessage = function SearchStatusMessage({ message }) {
+    if (!message || message !== 'registered') {
+        return <></>
+    }
+
+    return (
+        <div className="mb-8 text-center text-green-700 bg-green-100 rounded-lg border border-green-300 p-2">
+            <p>You have been registered successfully.</p>
+            <p>We will send you an email with the details.</p>
+        </div>
     );
 }
 

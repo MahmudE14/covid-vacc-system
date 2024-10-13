@@ -43,7 +43,6 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'nid' => ['required', 'string', 'unique:'.User::class, new NID],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'phone' => 'nullable|string',
             'vaccine_center' => 'required|exists:vaccine_centers,id',
         ]);
@@ -51,7 +50,6 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
             'nid' => $request->nid,
             'phone' => $request->phone,
             'vaccine_center_id' => $request->vaccine_center,
@@ -59,8 +57,6 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
+        return redirect()->to('/search?redirect=registered');
     }
 }

@@ -11,7 +11,14 @@ use Inertia\Response;
 class VaccinationSearchController extends Controller
 {
     public function index() {
-        return Inertia::render('Search');
+        $message = "";
+        if (request()->get('redirect') === 'registered') {
+            $message = 'registered';
+        }
+
+        return Inertia::render('Search', [
+            'message' => $message,
+        ]);
     }
 
     public function search(Request $request) {
